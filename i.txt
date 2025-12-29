@@ -1,0 +1,35 @@
+app.get("/",
+    (req, res) => {
+      Student.find().then(
+        (std) => {
+            res.json(std)
+    }
+        ).catch(
+            () => {
+                res.json(
+                    {message: "Error in fetching data"})
+            }
+    )
+} )
+
+
+
+
+
+app.post("/",
+    (req, res) => {
+        //saving the student in to the database
+        console.log(req.body);
+        
+        const student = new Student(req.body);
+        student.save().then(
+            () => {
+                res.json("Student saved");
+            }
+        ).catch(
+            () => {
+                res.json("Error saving student");
+            }
+        )
+    } )
+
