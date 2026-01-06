@@ -13,6 +13,7 @@ export async function createProduct(req, res) {
     }
 
     const product = new Product(req.body);
+    console.log(req.body);
     try{
         await product.save()
         res.json({message: "Product created successfully"})
