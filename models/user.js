@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
             phone:{type:String, required:true, default:"Not Given"},
             isDisabled:{type:Boolean,required:true, default:false},
             isEmailVerified:{type:Boolean, required:true, default:false}
+            
         })
 
 const User = mongoose.model("User", userSchema);

@@ -49,7 +49,7 @@ export async function createOrder(req, res) {
                 orderData.billItems[i]={
                     productId : product.productId,
                     productName : product.name,
-                    image : product.images[0],
+                    images : product.images[0],
                     quantity:body.billItems[i].quantity,
                     price : product.price
 
@@ -94,4 +94,26 @@ export function getOrders(req, res) {
             res.status(500).json({ message: "Error getting orders" });
         })
     }
+}
+export async function updateOrder(req,res){
+    try{
+        if(req.user==null){
+            res.status(403).json({
+                message:"You are not authorized to update an order"
+            })
+            return
+
+        }
+        const orderId=req.params.orderId
+        const order= await Order.findOneAndUpdate({orderId:orderId}, req.body)
+
+        res.json({
+            message:"Order Updated successfully"
+        })
+    }catch(err){
+        res.status(500).json({
+            message:"Order not updated"
+        })
+    }
+
 }
