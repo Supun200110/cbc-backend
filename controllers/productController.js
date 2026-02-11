@@ -67,3 +67,23 @@ export function updateProduct(req, res) {
         res.status(500).json({message: "Updating product failed"})
     })
 }
+
+export async function searchProduct(req, res) {
+	const search = req.params.id;
+	try {
+		const products = await Product.find({
+			$or: [
+				{ name: { $regex: search, $options: "i" } },
+				{ altNames: { $elemMatch: { $regex: search, $options: "i" } } },
+			],
+		});
+		res.json({
+			products: products,
+		});
+	} catch (err) {
+		res.status(500).json({
+			message: "Error in searching product",
+		});
+		return;
+	}
+}
